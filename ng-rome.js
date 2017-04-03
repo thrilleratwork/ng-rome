@@ -112,10 +112,17 @@ function romeDirective( rService ) {
 	var div_id;
 
 	function makeRome( scope , element ){
-		rService.newRome( element[0].childNodes[0], scope.options).on('data', function(){
+		var instance = rService.newRome( element[0].childNodes[0], scope.options).on('data', function(){
 			scope.$evalAsync( submitChanges( scope, element));
 		});
-	}							
+
+		// HACK: Rome.js does not have a way to clear calendar
+		if (scope.ngModel === '') {
+			scope.$applyAsync(function() {
+				instance.associated.value = '';
+			});
+		}
+	}
 
 	function submitChanges( scope, element ){
 		scope.ngModel = rome.find(element[0].childNodes[0]).getDateString();
