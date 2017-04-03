@@ -22,15 +22,15 @@ TODO
 //end: usage
 */
 
-function NgRome( options ) {	
+function NgRome( options ) {
 
 	var defaultOptions = options;
 
 	var merge = function( obj1, obj2 ){
 		var result = {};
-		for(var key1 in obj1){	result[key1] = obj1[key1]; }		
-		for(var key2 in obj2){ result[key2] = obj2[key2]; }		
-		return result;	
+		for(var key1 in obj1){	result[key1] = obj1[key1]; }
+		for(var key2 in obj2){ result[key2] = obj2[key2]; }
+		return result;
 	};
 
 	this.getOptions = function() {
@@ -38,8 +38,8 @@ function NgRome( options ) {
 	};
 
 	this.setOptions = function( options ){
-		for(var opt in options){			
-			defaultOptions[opt] = options[opt];			
+		for(var opt in options){
+			defaultOptions[opt] = options[opt];
 		}
 	};
 
@@ -76,10 +76,10 @@ function romeService( $rome ){
 	var service = this;
 	var romes = [];
 
-	service.newRome = function( element, instanceOptions ){			
+	service.newRome = function( element, instanceOptions){
 		var instance = rome.find(element);
 		var myRome = new $rome.Rome(element,instanceOptions);
-		
+
 		if(!instance){
 			instance = rome(element, myRome.options);
 			romes.push(instance);
@@ -90,7 +90,7 @@ function romeService( $rome ){
 			romeElem.refresh();
 		});
 
-		return instance;			
+		return instance;
 	};
 
 	service.destroyRome = function(element){
@@ -100,7 +100,7 @@ function romeService( $rome ){
 				romeIndex = index;
 				return true;
 			}
-			return false;				
+			return false;
 		});
 		romes.splice(romeIndex, -1);
 		toDestroy[0].destroy();
@@ -108,7 +108,7 @@ function romeService( $rome ){
 
 }
 
-function romeDirective( rService ) {	
+function romeDirective( rService ) {
 	var div_id;
 
 	function makeRome( scope , element ){
@@ -119,7 +119,7 @@ function romeDirective( rService ) {
 
 	function submitChanges( scope, element ){
 		scope.ngModel = rome.find(element[0].childNodes[0]).getDateString();
-	}	
+	}
 
 	return {
 		restrict: 'AE',
@@ -131,13 +131,13 @@ function romeDirective( rService ) {
 		scope: {
 			options: '=?romeOptions',
 			romeInline: '=romeInline',
-			ngModel: '=ngModel'
-		},			
-		link: function( scope, element, attrs ) {		
-			scope.$watch('ngModel', function(){					
+			ngModel: '=ngModel',
+		},
+		link: function( scope, element, attrs ) {
+			scope.$watch('ngModel', function(){
 				scope.options = scope.options ? scope.options : {};
-				scope.options.initialValue = !rome.find(element[0].childNodes[0]) ? scope.ngModel : '';					
-				makeRome(scope, element);				
+				scope.options.initialValue = !rome.find(element[0].childNodes[0]) ? scope.ngModel : '';
+				makeRome(scope, element);
 			});
 
 			scope.$on('$destroy', function() {
@@ -151,6 +151,3 @@ angular.module('ng-rome', [])
 	.provider('$rome', romeProvider)
 	.service('RomeService', ['$rome', romeService])
 	.directive('ngRome', ['RomeService', romeDirective]);
-
-
-
