@@ -132,7 +132,7 @@ function romeDirective( rService ) {
 		restrict: 'AE',
 		template: function( elem, attrs ){
 			div_id = 'rome_'+attrs.id;
-			var html = attrs.romeInline ? '<div id="'+div_id+'"></div>' : '<input class="flex flex-auto pointer-cursor px1" readonly="readonly" placeholder="'+ attrs.placeholder +'" id="'+div_id+'"/>';
+			var html = attrs.romeInline ? '<div id="'+div_id+'"></div>' : '<input class="flex flex-auto pointer-cursor px1 pymin" readonly="readonly" placeholder="'+ attrs.placeholder +'" id="'+div_id+'"/>';
 			return html;
 		},
 		scope: {
