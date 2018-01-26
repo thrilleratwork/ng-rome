@@ -148,8 +148,10 @@ function romeDirective( rService ) {
 			});
 
 			scope.$on('$destroy', function() {
-        rService.destroyRome(element[0].childNodes[0]);
-      });
+				if (rService) {
+        				rService.destroyRome(element[0].childNodes[0]);
+				}
+   			});
 		}
 	};
 }
